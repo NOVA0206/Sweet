@@ -127,7 +127,7 @@ export function EndingSequence({
                     transition={{ duration: 3, repeat: Infinity }}
                     className="text-balance font-serif text-3xl text-[#f3e9d2] sm:text-5xl"
                   >
-                    See you soon.
+                    Our story Continues forever.
                   </motion.h2>
                   <p className="mt-4 font-sans text-sm tracking-[0.2em] text-[#d8b26e]">
                     — For you, Sharwari
