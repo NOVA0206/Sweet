@@ -39,7 +39,7 @@ export const galleryItems = [
   { caption: 'The eyes which can make me lose in an instant.👀❤️', tall: false, hue: '#f5f3ff', src: '/gallery/Princess/IMG_20260716_014637.jpg' },
   { caption: 'If confidence had a favorite person, I think it would look something like this.💜', tall: true, hue: '#fff8f0', src: '/gallery/Princess/IMG_20260716_014543.jpg' },
   { caption: 'The kind of smile that makes ordinary days feel lighter.☀️', tall: false, hue: '#fce7f3', src: '/gallery/Princess/IMG_20260716_014605.jpg' },
-  { caption: '.', tall: false, hue: '#f5f3ff', src: '/gallery/Princess/IMG_20260716_014512.jpg' },
+  { caption: 'The glow which can make me melt in an instant.✨❤️', tall: false, hue: '#f5f3ff', src: '/gallery/Princess/IMG_20260716_014512.jpg' },
 ]
 
 export const quiz = [
@@ -75,7 +75,7 @@ export const gardenNotes = [
   { label: 'I remember', text: 'The way our first meet went till 9:47 PM and we didnt knew how time went by.' },
   { label: 'I hope', text: 'We get to make a hundred more small memories together.' },
   { label: 'I appreciate', text: 'Your presence, and the joy you bring into a room.' },
-  { label: 'I remember', text: 'The way you were scared while watching the.' },
+  { label: 'I remember', text: 'The way you were scared while watching the movie you are so cute.' },
   { label: 'I hope', text: 'You always feel as seen as you deserve to.' },
 ]
 
@@ -229,6 +229,15 @@ export const loadingMessages = [
   'Finding the prettiest smile...',
   'Adding sparkles...',
   'Almost there...',
+]
+
+export const loveQuotes = [
+  'In a sea of people, my eyes always search for you.',
+  'You are my today and all of my tomorrows.',
+  'Home is not a place, it is a person. It is you.',
+  'Every love story is beautiful, but ours is my favorite.',
+  'You are the reason I believe in soft, quiet miracles.',
+  'With you, even ordinary days feel like poetry.',
 ]
 
 export const hiddenHeartMessages = [

@@ -17,6 +17,8 @@ type ExperienceContextValue = {
   playSound: (name: SoundName) => void
   achievements: string[]
   unlock: (name: string) => void
+  duckLevel: number
+  duckMusic: (target: number, ms?: number) => void
 }
 
 const ExperienceContext = createContext<ExperienceContextValue | null>(null)
@@ -30,9 +32,26 @@ export function useExperience() {
 export function ExperienceProvider({ children }: { children: React.ReactNode }) {
   const [muted, setMuted] = useState(false)
   const [achievements, setAchievements] = useState<string[]>([])
+  const [duckLevel, setDuckLevel] = useState(1)
   const audioCtxRef = useRef<AudioContext | null>(null)
   const mutedRef = useRef(muted)
   mutedRef.current = muted
+  const duckLevelRef = useRef(1)
+  const duckRafRef = useRef<number | null>(null)
+
+  const duckMusic = useCallback((target: number, ms = 1200) => {
+    if (duckRafRef.current) cancelAnimationFrame(duckRafRef.current)
+    const start = performance.now()
+    const from = duckLevelRef.current
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / ms)
+      const eased = from + (target - from) * t
+      duckLevelRef.current = eased
+      setDuckLevel(eased)
+      if (t < 1) duckRafRef.current = requestAnimationFrame(step)
+    }
+    duckRafRef.current = requestAnimationFrame(step)
+  }, [])
 
   const ensureCtx = useCallback(() => {
     if (typeof window === 'undefined') return null
@@ -102,7 +121,7 @@ export function ExperienceProvider({ children }: { children: React.ReactNode }) 
 
   return (
     <ExperienceContext.Provider
-      value={{ muted, toggleMuted, playSound, achievements, unlock }}
+      value={{ muted, toggleMuted, playSound, achievements, unlock, duckLevel, duckMusic }}
     >
       {children}
     </ExperienceContext.Provider>

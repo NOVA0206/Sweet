@@ -133,6 +133,92 @@ export function Butterflies({ count = 4 }: { count?: number }) {
   )
 }
 
+/** Soft falling petals — a gentler, slower companion to FloatingParticles. */
+export function FloatingPetals({ count = 10 }: { count?: number }) {
+  const mounted = useMounted()
+  const colors = ['#f6b8d0', '#e6a3bd', '#d8b26e', '#f4c9a1']
+  const petals = useMemo(
+    () =>
+      Array.from({ length: count }, (_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        size: 10 + Math.random() * 10,
+        delay: Math.random() * 14,
+        duration: 14 + Math.random() * 12,
+        color: colors[i % colors.length],
+      })),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [count],
+  )
+
+  if (!mounted) return null
+
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+    >
+      {petals.map((p) => (
+        <span
+          key={p.id}
+          className="petal-drop absolute top-[-40px] rounded-[60%_40%_60%_40%]"
+          style={{
+            left: `${p.left}%`,
+            width: p.size,
+            height: p.size * 0.8,
+            background: p.color,
+            opacity: 0.75,
+            animationDelay: `${p.delay}s`,
+            animationDuration: `${p.duration}s`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+/** Tiny glowing sparkles that twinkle gently in place — cuter accent layer. */
+export function GlowSparkles({ count = 14 }: { count?: number }) {
+  const mounted = useMounted()
+  const sparkles = useMemo(
+    () =>
+      Array.from({ length: count }, (_, i) => ({
+        id: i,
+        top: Math.random() * 100,
+        left: Math.random() * 100,
+        size: 3 + Math.random() * 4,
+        delay: Math.random() * 4,
+        duration: 2.4 + Math.random() * 2.4,
+      })),
+    [count],
+  )
+
+  if (!mounted) return null
+
+  return (
+    <div
+      aria-hidden="true"
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden"
+    >
+      {sparkles.map((s) => (
+        <span
+          key={s.id}
+          className="absolute rounded-full"
+          style={{
+            top: `${s.top}%`,
+            left: `${s.left}%`,
+            width: s.size,
+            height: s.size,
+            background: 'var(--soft-gold)',
+            boxShadow: '0 0 8px 2px rgba(216,178,110,0.7)',
+            animation: `glow-pulse ${s.duration}s ease-in-out ${s.delay}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
 /** Animated soft gradient wash behind the whole experience. */
 export function GradientBackdrop() {
   return (
