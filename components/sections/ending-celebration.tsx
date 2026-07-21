@@ -81,6 +81,7 @@ export function EndingCelebration() {
       id="forever"
       className="relative flex min-h-dvh w-full flex-col items-center justify-center overflow-hidden px-6 py-28 text-center"
       style={{
+        minHeight: '100svh',
         background:
           'radial-gradient(120% 100% at 50% 100%, #3a2438 0%, #241a2e 55%, #140f1c 100%)',
       }}

@@ -27,6 +27,13 @@ export const metadata: Metadata = {
   title: 'For Sharwari',
   description: 'A little something made especially for you.',
   generator: 'v0.app',
+  // iPhone: prevent auto-linking phone numbers as blue links
+  other: {
+    'format-detection': 'telephone=no',
+    'apple-mobile-web-app-capable': 'yes',
+    'apple-mobile-web-app-status-bar-style': 'default',
+    'apple-mobile-web-app-title': 'For Sharwari',
+  },
 }
 
 export const viewport: Viewport = {

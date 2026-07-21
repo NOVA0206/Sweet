@@ -113,13 +113,31 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    /* Remove iOS tap highlight (grey flash on touch) */
+    -webkit-tap-highlight-color: transparent;
   }
   html {
     scroll-behavior: smooth;
+    /* Prevent double-tap zoom on iOS */
+    touch-action: manipulation;
   }
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-sans);
+    /* Smoother fonts on iOS/macOS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  /* Buttons and links: no callout popups, no 300ms delay on iOS */
+  button, a, [role="button"] {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+  }
+  /* Images: no long-press save menu on iOS */
+  img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
   }
   h1,
   h2,
@@ -144,16 +162,25 @@
 /* Utilities */
 @layer utilities {
   .glass {
-    background: color-mix(in oklab, var(--card) 55%, transparent);
-    backdrop-filter: blur(16px) saturate(140%);
+    background: color-mix(in srgb, var(--card) 55%, transparent);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
-    border: 1px solid color-mix(in oklab, var(--rose-gold) 22%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in srgb, var(--rose-gold) 22%, transparent);
   }
   .text-balance {
     text-wrap: balance;
+    /* Fallback for older browsers */
+    overflow-wrap: break-word;
   }
   .text-pretty {
+    /* text-wrap: pretty is not supported in Safari – fall back gracefully */
+    overflow-wrap: break-word;
     text-wrap: pretty;
+  }
+  /* Safari-safe dvh helper */
+  .min-h-dvh-safe {
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 }
 
@@ -330,17 +357,17 @@
 
 .photo-frame {
   position: relative;
-  border: 3px solid color-mix(in oklab, var(--soft-gold) 55%, transparent);
+  border: 3px solid color-mix(in srgb, var(--soft-gold) 55%, transparent);
   box-shadow:
-    0 0 0 6px color-mix(in oklab, var(--card) 90%, transparent),
-    0 8px 30px -8px color-mix(in oklab, var(--rose-gold) 45%, transparent);
+    0 0 0 6px color-mix(in srgb, var(--card) 90%, transparent),
+    0 8px 30px -8px color-mix(in srgb, var(--rose-gold) 45%, transparent);
   transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease;
 }
 
 .photo-frame:hover {
-  border-color: color-mix(in oklab, var(--rose-gold) 65%, transparent);
+  border-color: color-mix(in srgb, var(--rose-gold) 65%, transparent);
   box-shadow:
-    0 0 0 6px color-mix(in oklab, var(--card) 90%, transparent),
-    0 0 32px 4px color-mix(in oklab, var(--rose-gold) 35%, transparent),
-    0 14px 40px -10px color-mix(in oklab, var(--rose-gold) 55%, transparent);
+    0 0 0 6px color-mix(in srgb, var(--card) 90%, transparent),
+    0 0 32px 4px color-mix(in srgb, var(--rose-gold) 35%, transparent),
+    0 14px 40px -10px color-mix(in srgb, var(--rose-gold) 55%, transparent);
 }

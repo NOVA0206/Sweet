@@ -36,9 +36,15 @@ export function Experience() {
   const lenisRef = useRef<Lenis | null>(null)
 
   useEffect(() => {
+    const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches
     const lenis = new Lenis({
-      lerp: 0.09,
+      lerp: isTouch ? 0.15 : 0.09,
       smoothWheel: true,
+      // On iOS, prevent Lenis from capturing native touch momentum scroll
+      prevent: (node: Element) => {
+        // Allow native scroll inside fixed overlays (modals)
+        return node.closest('[data-lenis-prevent]') !== null
+      },
     })
     lenisRef.current = lenis
     let raf = 0

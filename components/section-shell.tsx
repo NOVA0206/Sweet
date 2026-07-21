@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import type { ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 
 export function Reveal({
   children,
@@ -31,15 +31,18 @@ export function Section({
   id,
   children,
   className = '',
+  style,
 }: {
   id: string
   children: ReactNode
   className?: string
+  style?: React.CSSProperties
 }) {
   return (
     <section
       id={id}
       className={`relative mx-auto flex w-full max-w-5xl flex-col items-center px-5 py-24 sm:py-32 ${className}`}
+      style={style}
     >
       {children}
     </section>

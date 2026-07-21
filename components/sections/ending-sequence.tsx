@@ -41,6 +41,11 @@ export function EndingSequence({
     setClosingOut(false)
     const t = timers.current
 
+    // Lock body scroll on iOS when overlay is open
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.body.style.touchAction = 'none'
+
     t.push(setTimeout(() => setPhase('text'), START_OFFSET))
     t.push(setTimeout(() => setStepIndex(1), START_OFFSET + 380))
     t.push(setTimeout(() => setStepIndex(2), START_OFFSET + 700))
@@ -55,6 +60,8 @@ export function EndingSequence({
     return () => {
       t.forEach(clearTimeout)
       timers.current = []
+      document.body.style.overflow = prev
+      document.body.style.touchAction = ''
     }
   }, [open])
 
@@ -100,11 +107,13 @@ export function EndingSequence({
           {/* cinematic blur + vignette, kept subtle so it never feels harsh */}
           <motion.div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 backdrop-blur-[1px]"
+            className="pointer-events-none absolute inset-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.9 }}
             style={{
+              WebkitBackdropFilter: 'blur(1px)',
+              backdropFilter: 'blur(1px)',
               background:
                 'radial-gradient(65% 60% at 50% 50%, transparent 0%, rgba(10,8,16,0.22) 100%)',
             }}
@@ -167,9 +176,9 @@ export function EndingSequence({
               {phase === 'text' && (
                 <motion.h2
                   key={steps[stepIndex]}
-                  initial={{ opacity: 0, y: 16, filter: 'blur(6px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -16, filter: 'blur(6px)' }}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
                   transition={{ duration: 0.7 }}
                   className="font-serif text-3xl tracking-wide text-[#f3e9d2] sm:text-5xl"
                 >

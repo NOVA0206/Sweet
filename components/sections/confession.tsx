@@ -93,6 +93,7 @@ export function Confession() {
       ref={ref}
       className="relative flex min-h-dvh w-full flex-col items-center justify-center overflow-hidden px-6 py-28 text-center"
       style={{
+        minHeight: '100svh',
         background:
           'radial-gradient(120% 100% at 50% 0%, #2c1f38 0%, #1c1526 55%, #100c18 100%)',
       }}

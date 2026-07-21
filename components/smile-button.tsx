@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Smile, X } from 'lucide-react'
 import Image from 'next/image'
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useExperience } from '@/components/experience-context'
 import { smileContent } from '@/lib/experience-data'
 
@@ -15,6 +15,18 @@ export function SmileButton() {
   )
   const bagRef = useRef<number[]>([])
   const countRef = useRef(0)
+
+  // Lock body scroll on iOS when modal is open
+  useEffect(() => {
+    if (!open) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.body.style.touchAction = 'none'
+    return () => {
+      document.body.style.overflow = prev
+      document.body.style.touchAction = ''
+    }
+  }, [open])
 
   const next = useCallback(() => {
     // no-repeat until the "bag" is exhausted, then reshuffle
@@ -63,7 +75,8 @@ export function SmileButton() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setOpen(false)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-6 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 p-6"
+            style={{ WebkitBackdropFilter: 'blur(8px)', backdropFilter: 'blur(8px)' }}
           >
             <motion.div
               key={current.text}

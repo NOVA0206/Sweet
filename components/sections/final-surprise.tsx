@@ -75,7 +75,7 @@ export function FinalSurprise({
   }, [closing, playSound, duckMusic, onChapterClosing])
 
   return (
-    <Section id="surprise" className="min-h-dvh justify-center">
+    <Section id="surprise" className="min-h-dvh justify-center" style={{ minHeight: '100svh' }}>
       {/* twinkling stars */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {revealed &&
@@ -135,8 +135,8 @@ export function FinalSurprise({
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={
               closing
-                ? { opacity: 0.35, scale: 0.98, y: -20, filter: 'blur(2px)' }
-                : { opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }
+                ? { opacity: 0.3, scale: 0.98, y: -20 }
+                : { opacity: 1, scale: 1, y: 0 }
             }
             transition={{ duration: closing ? 0.6 : 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="relative z-10 flex flex-col items-center text-center"
