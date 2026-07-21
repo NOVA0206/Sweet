@@ -40,7 +40,11 @@ export function SmileButton() {
         transition={{ delay: 1.2, type: 'spring' }}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
-        className="glass fixed bottom-6 left-6 z-40 flex items-center gap-2 rounded-full py-3 pl-4 pr-5 text-sm font-medium text-primary shadow-lg"
+        className="glass fixed z-40 flex items-center gap-2 rounded-full py-3 pl-4 pr-5 text-sm font-medium text-primary shadow-lg"
+        style={{
+          bottom: 'max(1.5rem, env(safe-area-inset-bottom))',
+          left: 'max(1.5rem, env(safe-area-inset-left))',
+        }}
         aria-label="Need a smile? Show me something cute"
       >
         <motion.span

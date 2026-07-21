@@ -75,7 +75,7 @@ export function FinalSurprise({
   }, [closing, playSound, duckMusic, onChapterClosing])
 
   return (
-    <Section id="surprise" className="min-h-screen justify-center">
+    <Section id="surprise" className="min-h-dvh justify-center">
       {/* twinkling stars */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {revealed &&

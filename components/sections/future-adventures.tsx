@@ -9,6 +9,7 @@ import {
   Sunset,
   UtensilsCrossed,
 } from 'lucide-react'
+import { useState } from 'react'
 import {
   Reveal,
   Section,
@@ -28,6 +29,67 @@ const backLines = [
   'Just the sky, and no reason to hurry.',
 ]
 
+/**
+ * :hover-only flips never trigger on iOS touch (no pointer to hover), so a
+ * tap-to-flip fallback is required alongside the desktop hover. Explicit
+ * -webkit- prefixes on backface-visibility/transform-style are required too:
+ * Safari renders both faces superimposed without them.
+ */
+function AdventureCard({
+  icon: Icon,
+  title,
+  blurb,
+  backLine,
+  onOpen,
+}: {
+  icon: typeof Sunset
+  title: string
+  blurb: string
+  backLine: string
+  onOpen: () => void
+}) {
+  const [flipped, setFlipped] = useState(false)
+
+  return (
+    <div
+      className="group h-full [perspective:1200px]"
+      onMouseEnter={() => {
+        setFlipped(true)
+        onOpen()
+      }}
+      onMouseLeave={() => setFlipped(false)}
+      onClick={() => {
+        const next = !flipped
+        setFlipped(next)
+        if (next) onOpen()
+      }}
+    >
+      <div
+        className="relative h-52 w-full cursor-pointer transition-transform duration-700 [-webkit-transform-style:preserve-3d] [transform-style:preserve-3d]"
+        style={{ transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+      >
+        {/* front */}
+        <div className="glass absolute inset-0 flex flex-col rounded-3xl p-6 shadow-sm [-webkit-backface-visibility:hidden] [backface-visibility:hidden]">
+          <span className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-secondary text-primary">
+            <Icon size={22} />
+          </span>
+          <h3 className="font-serif text-xl text-foreground">{title}</h3>
+          <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
+            {blurb}
+          </p>
+        </div>
+        {/* back */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl bg-primary p-6 text-center text-primary-foreground shadow-md [-webkit-backface-visibility:hidden] [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <Icon size={26} className="mb-3 opacity-90" />
+          <p className="text-pretty font-serif text-lg leading-snug">
+            {backLine}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function FutureAdventures() {
   const { playSound } = useExperience()
 
@@ -38,7 +100,7 @@ export function FutureAdventures() {
       <Reveal delay={0.1}>
         <p className="mt-4 max-w-md text-center text-muted-foreground">
           Not plans or expectations, just a few ideas I think we&apos;d enjoy.
-          Hover to peek. No pressure at all.
+          Hover or tap to peek. No pressure at all.
         </p>
       </Reveal>
 
@@ -47,32 +109,13 @@ export function FutureAdventures() {
           const Icon = icons[i % icons.length]
           return (
             <Reveal key={a.title} delay={i * 0.06}>
-              <div
-                className="group h-full [perspective:1200px]"
-                onMouseEnter={() => playSound('pop')}
-              >
-                <div className="relative h-52 w-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                  {/* front */}
-                  <div className="glass absolute inset-0 flex flex-col rounded-3xl p-6 shadow-sm [backface-visibility:hidden]">
-                    <span className="mb-4 flex size-12 items-center justify-center rounded-2xl bg-secondary text-primary">
-                      <Icon size={22} />
-                    </span>
-                    <h3 className="font-serif text-xl text-foreground">
-                      {a.title}
-                    </h3>
-                    <p className="mt-2 text-pretty text-sm leading-relaxed text-muted-foreground">
-                      {a.blurb}
-                    </p>
-                  </div>
-                  {/* back */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl bg-primary p-6 text-center text-primary-foreground shadow-md [backface-visibility:hidden] [transform:rotateY(180deg)]">
-                    <Icon size={26} className="mb-3 opacity-90" />
-                    <p className="text-pretty font-serif text-lg leading-snug">
-                      {backLines[i % backLines.length]}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <AdventureCard
+                icon={Icon}
+                title={a.title}
+                blurb={a.blurb}
+                backLine={backLines[i % backLines.length]}
+                onOpen={() => playSound('pop')}
+              />
             </Reveal>
           )
         })}

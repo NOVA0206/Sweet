@@ -80,7 +80,11 @@ export function EasterEggs() {
       <button
         onClick={handleLogo}
         aria-label="Tap the logo"
-        className="glass fixed left-4 top-4 z-50 flex items-center gap-2 rounded-full py-2 pl-2 pr-4 shadow-sm transition-transform hover:scale-[1.03] active:scale-95"
+        className="glass fixed z-50 flex items-center gap-2 rounded-full py-2 pl-2 pr-4 shadow-sm transition-transform hover:scale-[1.03] active:scale-95"
+        style={{
+          top: 'max(1rem, env(safe-area-inset-top))',
+          left: 'max(1rem, env(safe-area-inset-left))',
+        }}
       >
         <span className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
           <Heart size={16} fill="currentColor" />
@@ -97,7 +101,11 @@ export function EasterEggs() {
           playSound('click')
         }}
         aria-label="View achievements"
-        className="glass fixed left-4 top-[4.5rem] z-50 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs text-secondary-foreground shadow-sm transition-transform hover:scale-[1.03]"
+        className="glass fixed z-50 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs text-secondary-foreground shadow-sm transition-transform hover:scale-[1.03]"
+        style={{
+          top: 'max(4.5rem, calc(4.5rem + env(safe-area-inset-top)))',
+          left: 'max(1rem, env(safe-area-inset-left))',
+        }}
       >
         <Award size={14} />
         {achievements.length}
@@ -109,7 +117,11 @@ export function EasterEggs() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
-            className="glass fixed left-4 top-28 z-50 w-56 rounded-3xl p-4 shadow-lg"
+            className="glass fixed z-50 w-56 rounded-3xl p-4 shadow-lg"
+            style={{
+              top: 'max(7rem, calc(7rem + env(safe-area-inset-top)))',
+              left: 'max(1rem, env(safe-area-inset-left))',
+            }}
           >
             <p className="mb-2 font-serif text-sm text-secondary-foreground">
               Achievements
@@ -142,7 +154,8 @@ export function EasterEggs() {
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            className="glass fixed left-1/2 top-6 z-[60] flex -translate-x-1/2 items-center gap-2 rounded-full px-5 py-3 text-sm text-secondary-foreground shadow-lg"
+            className="glass fixed left-1/2 z-[60] flex -translate-x-1/2 items-center gap-2 rounded-full px-5 py-3 text-sm text-secondary-foreground shadow-lg"
+            style={{ top: 'max(1.5rem, calc(1.5rem + env(safe-area-inset-top)))' }}
           >
             <Sparkles size={16} className="text-accent" />
             <span className="max-w-[70vw] text-pretty">{toast}</span>

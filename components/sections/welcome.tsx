@@ -36,7 +36,7 @@ export function Welcome({ onBegin }: { onBegin: () => void }) {
     <section
       id="welcome"
       ref={areaRef}
-      className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden px-6 text-center"
+      className="relative flex min-h-dvh w-full flex-col items-center justify-center overflow-hidden px-6 text-center"
     >
       {trail.map((p) => (
         <motion.span
